@@ -12,10 +12,12 @@
 /.targets.mk
 /.venv/
 /.vscode/
+/lib
 /node_modules/
 /versioned/
 Gemfile.lock
 archive.json
+draft-smith-rats-oidc-attest.xml
 package-lock.json
 report.xml
 !requirements.txt
