@@ -1,8 +1,8 @@
 ---
 title: Attestation in OpenID-Connect
-abbrev: "TODO - Abbreviation"
+abbrev: OIDC Attest
 category: info
-docname: draft-smith-rats-oidc-attest-latest
+docname: draft-sh-rats-oidc-attest-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
 number:
 date:
@@ -19,8 +19,8 @@ venue:
   type: "Working Group"
   mail: "rats@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/rats/"
-  github: "nedmsmith/draft-smith-rats-oidc-attest"
-  latest: "https://nedmsmith.github.io/draft-smith-rats-oidc-attest/draft-smith-rats-oidc-attest.html"
+  github: "nedmsmith/draft-sh-rats-oidc-attest"
+  latest: "https://nedmsmith.github.io/draft-sh-rats-oidc-attest/draft-sh-rats-oidc-attest.html"
 
 author:
  -
