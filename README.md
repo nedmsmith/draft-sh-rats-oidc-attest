@@ -2,10 +2,10 @@
 
 This is the working area for the individual Internet-Draft, "Attestation in OpenID-Connect".
 
-* [Editor's Copy](https://nedmsmith.github.io/draft-sh-rats-oidc-attest/#go.draft-sh-rats-oidc-attest.html)
+* [Editor's Copy](https://nedmsmith.github.io/draft-sh-rats-oidc-attest/draft-sh-rats-oidc-attest.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-sh-rats-oidc-attest)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-sh-rats-oidc-attest)
-* [Compare Editor's Copy to Individual Draft](https://nedmsmith.github.io/draft-sh-rats-oidc-attest/#go.draft-sh-rats-oidc-attest.diff)
+* [Compare Editor's Copy to Individual Draft](https://nedmsmith.github.io/draft-sh-rats-oidc-attest/draft-sh-rats-oidc-attest.diff)
 
 
 ## Contributing
