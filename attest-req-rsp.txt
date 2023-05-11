@@ -1,0 +1,8 @@
++---------+                                       +---------+
+|         |                                       |         |
+|         |--- (2.1) client-id, access-token,---->|         |
+|   OP    |          id-token                     |   RA    |
+|         |                                       |         |
+|         |<-- (2.2) client-id, access-token,-----|         |
+|         |          id-token, Evidence           |         |
++---------+                                       +---------+

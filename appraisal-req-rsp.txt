@@ -1,0 +1,8 @@
++---------+                                       +---------+
+|         |                                       |         |
+|         |--- (2.3) access-token, Evidence------>|         |
+|   OP    |                                       |   RV    |
+|         |                                       |         |
+|         |<-- (2.4) access-token, Attestation----|         |
+|         |                Results                |         |
++---------+                                       +---------+
