@@ -24,13 +24,29 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    fullname: Ned Smith
+    organization: Intel Corporation
+    email: ned.smith@intel.com
+ -
+    fullname: Thomas Hardjono
+    organization: Massachusetts Institute of Technology
+    country: United States of America
+    email: ned.smith@intel.com
 
 normative:
+  OCC2014:
+    title: >
+      OpenID Connect Core 1.0 incorporating errata set 1
+    author: Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., Mortimer, C.
+    date: 2014-11
 
 informative:
+  RFC2119: key-words
+  RFC9334: rats-arch
+  RFC6794: oauth2
+  RFC6180: cddl
+  RFC8949: cbor
+  I-D.ietf-ftbs-rats-msg-wrap: msg-wrap
 
 
 --- abstract
