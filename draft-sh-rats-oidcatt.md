@@ -1,8 +1,8 @@
 ---
 title: Attestation in OpenID-Connect
-abbrev: OIDC Attest
+abbrev: OIDCATT
 category: info
-docname: draft-sh-rats-oidc-attest-latest
+docname: draft-sh-rats-oidcatt-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
 number:
 date:
@@ -11,16 +11,14 @@ v: 3
 area: "Security"
 workgroup: "Remote ATtestation ProcedureS"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - attestation
 venue:
   group: "Remote ATtestation ProcedureS"
   type: "Working Group"
   mail: "rats@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/rats/"
   github: "nedmsmith/draft-sh-rats-oidc-attest"
-  latest: "https://nedmsmith.github.io/draft-sh-rats-oidc-attest/draft-sh-rats-oidc-attest.html"
+  latest: "https://nedmsmith.github.io/draft-sh-rats-oidc-attest/draft-sh-rats-oidcatt.html"
 
 author:
  -  ins: N. Smith
