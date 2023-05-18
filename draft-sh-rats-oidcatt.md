@@ -24,12 +24,13 @@ author:
  -  ins: N. Smith
     fullname: Ned Smith
     organization: Intel Corporation
+    country: United States of America
     email: ned.smith@intel.com
  -  ins: T. Hardjono
     fullname: Thomas Hardjono
     organization: Massachusetts Institute of Technology
     country: United States of America
-    email: ned.smith@intel.com
+    email: hardjono@mit.edu
 
 normative:
   OCC2014:
