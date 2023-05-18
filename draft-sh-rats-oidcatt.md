@@ -42,7 +42,7 @@ normative:
 informative:
   RFC9334: rats-arch
   RFC6749: oauth2
-  I-D.ietf-ftbs-rats-msg-wrap: msg-wrap
+  I-D.ftbs-rats-msg-wrap: msg-wrap
 
 entity:
   SELF: "RFCthis"
@@ -126,16 +126,16 @@ The example protocol message exchange involves four main endpoints:
   boot code, system software and the browser. The lead Attesting Environment typically seeks to collect Evidence that
   describes all the components, from the root of trust to the browser, that may influence browser behavior.
 
-1.	End User (EU/”Alice”) – a native application that can engage the human user directly. This document may refer to the
+1. End User (EU/”Alice”) – a native application that can engage the human user directly. This document may refer to the
 End User by name, namely: “Alice”.
 
-1.	Relying Party (RP) – an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges,
+1. Relying Party (RP) – an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges,
 but also wants Attestation Results that describe the trustworthiness of the UE device. The RP is synonymous with the RATS
 Relying Party (RRP).
 
-1.	OpenID Provider (OP) – an Authorization Server (AS) that implements OIDC.
+1. OpenID Provider (OP) – an Authorization Server (AS) that implements OIDC.
 
-1.	Verifier (RV) – a RATS attestation Verifier that processes device Evidence. If the Verifier is combined with the OP,
+1. Verifier (RV) – a RATS attestation Verifier that processes device Evidence. If the Verifier is combined with the OP,
 the Verifier is synonymous with OP.
 
 ## Setup Phase {#setup-phase}
@@ -200,9 +200,9 @@ and an attestation scope:
 
 ~~~
 AuthN_Req = {
-	"location": https://op.example.com/authn"
-	"client_id": "s6BhdRkqt3",
-	"scope": "device-attest"
+    "location": https://op.example.com/authn"
+    "client_id": "s6BhdRkqt3",
+    "scope": "device-attest"
 }
 ~~~
 
@@ -231,10 +231,10 @@ The forwarded AuthN Response payload example identifies the originating RP, scop
 
 ~~~
 AuthN_Rsp = {
-	"client_id": "s6BhdRkqt3",
-	"scope": "device-attest",
-	"resp_type": "code",
-	"authn_proof": "<tbd>"
+    "client_id": "s6BhdRkqt3",
+    "scope": "device-attest",
+    "resp_type": "code",
+    "authn_proof": "<tbd>"
 }
 ~~~
 
@@ -277,23 +277,23 @@ attestation API of the RA and an id_token that identifies the End User.
 
 ~~~
 access_token = {
-	"iss": "https://jwt-op.example.com",
-	"sub": "https://jwt-ra.example.com/24400320",
-	"aud": "https://jwt-rp.example.com/s6BhdRkqt3",
-	"nbf": 1300815780,
-	"exp": 1300819380,
-	"claims.example.com/attest-api": true
+    "iss": "https://jwt-op.example.com",
+    "sub": "https://jwt-ra.example.com/24400320",
+    "aud": "https://jwt-rp.example.com/s6BhdRkqt3",
+    "nbf": 1300815780,
+    "exp": 1300819380,
+    "claims.example.com/attest-api": true
 }
 ~~~
 
 ~~~
 id_token = {
-	"iss": "https://jwt-op.example.com",
-	"sub": "https://jwt-ra.example.com/24400320",
-	"aud": "https://jwt-rp.example.com/s6BhdRkqt3",
-	"nbf": 1300815780,
-	"exp": 1300819380,
-	"name": "Alice"
+    "iss": "https://jwt-op.example.com",
+    "sub": "https://jwt-ra.example.com/24400320",
+    "aud": "https://jwt-rp.example.com/s6BhdRkqt3",
+    "nbf": 1300815780,
+    "exp": 1300819380,
+    "name": "Alice"
 }
 ~~~
 
@@ -301,8 +301,8 @@ The response payload contains an Evidence value as described by a conceptual mes
 
 ~~~
 evidence_cmw = [
-	"application/eat+jwt",
-	"<base64-string containing a JWT>"
+    "application/eat+jwt",
+    "<base64-string containing a JWT>"
 ]
 ~~~
 
@@ -324,19 +324,19 @@ and the Evidence to be appraised.
 
 ~~~
 access_token = {
-	"iss": "https://jwt-op.example.com",
-	"sub": "https://jwt-rv.example.com",
-	"aud": "https://jwt-rp.example.com/s6BhdRkqt3",
-	"nbf": 1300815780,
-	"exp": 1300819380,
-	"claims.example.com/appraisal-api": true
+    "iss": "https://jwt-op.example.com",
+    "sub": "https://jwt-rv.example.com",
+    "aud": "https://jwt-rp.example.com/s6BhdRkqt3",
+    "nbf": 1300815780,
+    "exp": 1300819380,
+    "claims.example.com/appraisal-api": true
 }
 ~~~
 
 ~~~
 evidence_cmw = [
-	"application/eat+jwt",
-	"<base64-string containing a JWT>"
+    "application/eat+jwt",
+    "<base64-string containing a JWT>"
 ]
 ~~~
 
@@ -344,8 +344,8 @@ The response payload contains an Attestation Results value as described by a con
 
 ~~~
 attestation_result_cmw = [
-	"application/eat+jwt",
-	"<base64-string containing a JWT>"
+    "application/eat+jwt",
+    "<base64-string containing a JWT>"
 ]
 ~~~
 
