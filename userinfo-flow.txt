@@ -1,8 +1,8 @@
 +---------+                                       +---------+
 |         |                                       |         |
-|         |--- (4) access-token, id-token,------->|         |
+|         +--- (4) access-token, id-token,------->|         |
 |   RP    |             client-id                 |   UE    |
 |         |                                       |         |
-|         |<-- (5) access-token, id-token,--------|         |
+|         |<-- (5) access-token, id-token,--------+         |
 |         |          client-id, UserInfo          |         |
 +---------+                                       +---------+

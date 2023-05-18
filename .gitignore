@@ -17,7 +17,7 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-sh-rats-oidc-attest.xml
+draft-sh-rats-oidcatt.xml
 package-lock.json
 report.xml
 !requirements.txt
