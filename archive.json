@@ -1,0 +1,321 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-05-28T00:56:49.970154+00:00",
+  "repo": "nedmsmith/draft-sh-rats-oidc-attest",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 6,
+      "id": "I_kwDOIhTxMM5luYsy",
+      "title": "Handling svg",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/issues/6",
+      "state": "OPEN",
+      "author": "nedmsmith",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The extractDiagrams file doesn't appear to be working. However, that doesn't appear to prevent creation of html with svg diagrams.",
+      "createdAt": "2023-05-11T22:32:48Z",
+      "updatedAt": "2023-05-11T22:32:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOIhTxMM5m4hHO",
+      "title": "tools need to install aasvg",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/issues/8",
+      "state": "OPEN",
+      "author": "nedmsmith",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "$ npm install -g aasvg\r\n\r\nSeems to work, but make tools need to add this",
+      "createdAt": "2023-05-25T15:56:44Z",
+      "updatedAt": "2023-05-25T15:56:44Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOIhTxMM5D6GLN",
+      "title": "Template",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/1",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-11-29T17:20:27Z",
+      "updatedAt": "2022-11-29T18:55:34Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "74382d5e7442e814a462e06093b15dbfd1908de9",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "template",
+      "headRefOid": "ba8ed6312496834655b2c127f1d3496562479a0d",
+      "closedAt": "2022-11-29T18:17:09Z",
+      "mergedAt": "2022-11-29T18:17:09Z",
+      "mergedBy": "nedmsmith",
+      "mergeCommit": {
+        "oid": "45c208260d2f4009a6dc66197d9368d32468338c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOIhTxMM5HacUr",
+          "commit": {
+            "abbreviatedOid": "ba8ed63"
+          },
+          "author": "nedmsmith",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-11-29T18:16:58Z",
+          "updatedAt": "2022-11-29T18:16:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOIhTxMM5D6f3F",
+      "title": "Update files",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/2",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-11-29T18:58:44Z",
+      "updatedAt": "2022-12-07T19:37:29Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "45c208260d2f4009a6dc66197d9368d32468338c",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "update-files",
+      "headRefOid": "d43eea35e4f3612c3054fbc76240ce8343c87e2f",
+      "closedAt": "2022-12-07T19:37:29Z",
+      "mergedAt": "2022-12-07T19:37:29Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "fe9d7db2bf1004e42e90909333f036d7a3db202d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOIhTxMM5Hauho",
+          "commit": {
+            "abbreviatedOid": "54eca9f"
+          },
+          "author": "nedmsmith",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-11-29T19:04:07Z",
+          "updatedAt": "2022-11-29T19:04:53Z",
+          "comments": [
+            {
+              "originalPosition": 3,
+              "body": "should be ned.smith@intel.com",
+              "createdAt": "2022-11-29T19:04:07Z",
+              "updatedAt": "2022-11-29T19:04:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOIhTxMM5Hava8",
+          "commit": {
+            "abbreviatedOid": "54eca9f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-11-29T19:06:54Z",
+          "updatedAt": "2022-11-29T19:06:55Z",
+          "comments": [
+            {
+              "originalPosition": 3,
+              "body": "```suggestion\r\ndraft-smith-rats-oidc-attest.md ned.smith@intel.com\r\n```",
+              "createdAt": "2022-11-29T19:06:54Z",
+              "updatedAt": "2022-11-29T19:06:55Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOIhTxMM5QOUJd",
+      "title": "Update draft-smith-rats-oidc-attest.md",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/3",
+      "state": "MERGED",
+      "author": "nedmsmith",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "rename draft to match word doc",
+      "createdAt": "2023-05-10T19:19:16Z",
+      "updatedAt": "2023-05-10T19:20:18Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "fe9d7db2bf1004e42e90909333f036d7a3db202d",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "rename-draft",
+      "headRefOid": "380ff101a56c3cb9816cf46e5244e7714eccba88",
+      "closedAt": "2023-05-10T19:20:18Z",
+      "mergedAt": "2023-05-10T19:20:18Z",
+      "mergedBy": "nedmsmith",
+      "mergeCommit": {
+        "oid": "d5d258b37d6f8c4812392b2e72993b07d60b7ebe"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOIhTxMM5QTglw",
+      "title": "Nedmsmith readme 1",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/4",
+      "state": "CLOSED",
+      "author": "nedmsmith",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-11T15:25:38Z",
+      "updatedAt": "2023-05-11T21:49:31Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "316823e78b75b4c8ea8efe238564b87989e7ace8",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "nedmsmith-readme-1",
+      "headRefOid": "dfd922c34ea16f484de4cede68fc0637b73f5e7c",
+      "closedAt": "2023-05-11T21:49:31Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOIhTxMM5QTvOF",
+      "title": "Update draft-sh-rats-oidc-attest.md",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/5",
+      "state": "CLOSED",
+      "author": "nedmsmith",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "added references",
+      "createdAt": "2023-05-11T15:59:52Z",
+      "updatedAt": "2023-05-11T21:49:04Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "316823e78b75b4c8ea8efe238564b87989e7ace8",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "nedmsmith-refs-1",
+      "headRefOid": "fddee7aa8be28b7da46ae034ee17013d826d04bd",
+      "closedAt": "2023-05-11T21:49:04Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOIhTxMM5QzWTu",
+      "title": "Attempt at fixing editor copy",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/7",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-18T12:26:34Z",
+      "updatedAt": "2023-05-18T15:08:06Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "1fe5a13a526f6eb6514e23c66d0a0fccd70b7550",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "attempt-at-fixing-editor-copy",
+      "headRefOid": "b1279357429176953798c1b328727e4493cef984",
+      "closedAt": "2023-05-18T15:07:37Z",
+      "mergedAt": "2023-05-18T15:07:37Z",
+      "mergedBy": "nedmsmith",
+      "mergeCommit": {
+        "oid": "a7495fe921348d259178698f501a7b34121f0cc1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOIhTxMM5VaDjD",
+          "commit": {
+            "abbreviatedOid": "b127935"
+          },
+          "author": "nedmsmith",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "LGTM",
+          "createdAt": "2023-05-18T15:08:06Z",
+          "updatedAt": "2023-05-18T15:08:06Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
