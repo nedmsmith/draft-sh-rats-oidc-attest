@@ -96,13 +96,15 @@ OIDC roles are as follows:
 and (usually) an Access Token.
 (a.k.a., an OAuth 2.0 Authorization Server, {{-oauth2}}).
 * Relying Party (RP) / Client – an endpoint that sends a request to an OpenID Provider.
-* UserInfo Endpoint (UE) – an endpoint that receives an Access Token and sends Claims about an End User,
-also known as the User Agent (UA).
+* UserInfo Endpoint (UE) – an API endpoint that receives an Access Token and sends Claims about an End User.
+* User Agent (UA) - a browser or other code that may interact with an End User or access user resources.
 * End User (EU) – a human participant.
 
 OAuth 2.0 roles are as follows:
 
 * Resource Server (RS) – a service that controls a resource.
+* Client - synonymous with User Agent.
+* Resource Owner (RO) - synonymous with End User.
 
 # OIDC Sequence with Attestation {#oidc-sequence}
 
@@ -119,25 +121,24 @@ The example protocol message exchange involves four main endpoints:
 
 1. Device – a RATS Attester that consists of two sub entities:
 
-  * A UserInfo Endpoint (UE) (e.g., browser) that supplies user information for OIDC authentication, and
+  * A UserInfo Endpoint (UE) that supplies user information for OIDC authentication, and
 
   * A lead Attesting Environment, that collects device attestation Evidence. When using RATS terminology, the device may be
   referred to as the RATS Attester (RA). The RA is technically an OAuth 2.0 Resource Server (RS) that performs attestation
   Evidence collection. The Attester device may consist of multiple components that typically include a root of trust,
   boot code, system software and the browser. The lead Attesting Environment typically seeks to collect Evidence that
-  describes all the components, from the root of trust to the browser, that may influence browser behavior.
+  describes all the components, from the root of trust to the UA, that may influence endpoint behavior.
 
-1. End User (EU/”Alice”) – a native application that can engage the human user directly. This document may refer to the
-End User by name, namely: “Alice”.
+1. User Agent (UA) – a native application that can engage the End User directly.
 
-1. Relying Party (RP) – an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges,
-but also wants Attestation Results that describe the trustworthiness of the UE device. The RP is synonymous with the RATS
-Relying Party (RRP).
+1. Relying Party (RP) – an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges.
+The RP may rely on the OP to appraise attestation results on its behalf as a RATS Relying Party (RRP). As such the RP may be the RATS AR Owner. Alternatively, the AR may directly process Attestation Results.
 
-1. OpenID Provider (OP) – an Authorization Server (AS) that implements OIDC.
+1. OpenID Provider (OP) – an Authorization Server (AS) that implements OIDC such that receipt of an OpenID 'code' from the UA results in the issuance of an OpenID token, 'id-token'. The OP may implement the RATS Relying Party (RRP) role such that issuance of the OpenID token is conditional on suitable Attestation Results. The RP may take on the role of AR Owner to ensure the OP evaluates attestation results that align with its risk requirements.
 
-1. Verifier (RV) – a RATS attestation Verifier that processes device Evidence. If the Verifier is combined with the OP,
-the Verifier is synonymous with OP.
+1. Verifier (RV) – a RATS attestation Verifier that processes device Evidence. 
+If the Verifier is combined with the OP, the Verifier becomes an additional processing
+stage within the OP.
 
 ## Setup Phase {#setup-phase}
 
