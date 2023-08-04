@@ -136,7 +136,7 @@ The RP may rely on the OP to appraise attestation results on its behalf as a RAT
 
 1. OpenID Provider (OP) – an Authorization Server (AS) that implements OIDC such that receipt of an OpenID 'code' from the UA results in the issuance of an OpenID token, 'id-token'. The OP may implement the RATS Relying Party (RRP) role such that issuance of the OpenID token is conditional on suitable Attestation Results. The RP may take on the role of AR Owner to ensure the OP evaluates attestation results that align with its risk requirements.
 
-1. Verifier (RV) – a RATS attestation Verifier that processes device Evidence. 
+1. Verifier (RV) – a RATS attestation Verifier that processes device Evidence.
 If the Verifier is combined with the OP, the Verifier becomes an additional processing
 stage within the OP.
 
