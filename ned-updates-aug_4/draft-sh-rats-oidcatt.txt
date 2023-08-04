@@ -210,17 +210,17 @@ Table of Contents
       components, from the root of trust to the UA, that may influence
       endpoint behavior.
 
-   1.  User Agent (UA) - a native application that can engage the End
+   2.  User Agent (UA) - a native application that can engage the End
        User directly.
 
-   2.  Relying Party (RP) - an endpoint that seeks UserInfo used to
+   3.  Relying Party (RP) - an endpoint that seeks UserInfo used to
        replay user authentication responses for OIDC exchanges.  The RP
        may rely on the OP to appraise attestation results on its behalf
        as a RATS Relying Party (RRP).  As such the RP may be the RATS AR
        Owner.  Alternatively, the AR may directly process Attestation
        Results.
 
-   3.  OpenID Provider (OP) - an Authorization Server (AS) that
+   4.  OpenID Provider (OP) - an Authorization Server (AS) that
        implements OIDC such that receipt of an OpenID 'code' from the UA
        results in the issuance of an OpenID token, 'id-token'.  The OP
        may implement the RATS Relying Party (RRP) role such that
@@ -229,7 +229,7 @@ Table of Contents
        ensure the OP evaluates attestation results that align with its
        risk requirements.
 
-   4.  Verifier (RV) - a RATS attestation Verifier that processes device
+   5.  Verifier (RV) - a RATS attestation Verifier that processes device
        Evidence.  If the Verifier is combined with the OP, the Verifier
        becomes an additional processing stage within the OP.
 
