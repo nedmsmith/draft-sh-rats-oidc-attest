@@ -129,6 +129,7 @@ The example protocol message exchange involves four main endpoints:
   boot code, system software and the browser. The lead Attesting Environment typically seeks to collect Evidence that
   describes all the components, from the root of trust to the UA, that may influence endpoint behavior.
 
+{:start="2"}
 1. User Agent (UA) – a native application that can engage the End User directly.
 
 1. Relying Party (RP) – an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges.
