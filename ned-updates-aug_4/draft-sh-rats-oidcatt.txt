@@ -5,8 +5,8 @@
 Remote ATtestation ProcedureS                                   N. Smith
 Internet-Draft                                         Intel Corporation
 Intended status: Informational                               T. Hardjono
-Expires: 19 November 2023          Massachusetts Institute of Technology
-                                                             18 May 2023
+Expires: 5 February 2024           Massachusetts Institute of Technology
+                                                           4 August 2023
 
 
                      Attestation in OpenID-Connect
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 November 2023.
+   This Internet-Draft will expire on 5 February 2024.
 
 Copyright Notice
 
@@ -161,15 +161,21 @@ Table of Contents
    *  Relying Party (RP) / Client - an endpoint that sends a request to
       an OpenID Provider.
 
-   *  UserInfo Endpoint (UE) - an endpoint that receives an Access Token
-      and sends Claims about an End User, also known as the User Agent
-      (UA).
+   *  UserInfo Endpoint (UE) - an API endpoint that receives an Access
+      Token and sends Claims about an End User.
+
+   *  User Agent (UA) - a browser or other code that may interact with
+      an End User or access user resources.
 
    *  End User (EU) - a human participant.
 
    OAuth 2.0 roles are as follows:
 
    *  Resource Server (RS) - a service that controls a resource.
+
+   *  Client - synonymous with User Agent.
+
+   *  Resource Owner (RO) - synonymous with End User.
 
 3.  OIDC Sequence with Attestation
 
@@ -190,8 +196,8 @@ Table of Contents
 
    1.  Device - a RATS Attester that consists of two sub entities:
 
-   *  A UserInfo Endpoint (UE) (e.g., browser) that supplies user
-      information for OIDC authentication, and
+   *  A UserInfo Endpoint (UE) that supplies user information for OIDC
+      authentication, and
 
    *  A lead Attesting Environment, that collects device attestation
       Evidence.  When using RATS terminology, the device may be referred
@@ -201,25 +207,31 @@ Table of Contents
       components that typically include a root of trust, boot code,
       system software and the browser.  The lead Attesting Environment
       typically seeks to collect Evidence that describes all the
-      components, from the root of trust to the browser, that may
-      influence browser behavior.
+      components, from the root of trust to the UA, that may influence
+      endpoint behavior.
 
-   1.  End User (EU/"Alice") - a native application that can engage the
-       human user directly.  This document may refer to the End User by
-       name, namely: "Alice".
+   1.  User Agent (UA) - a native application that can engage the End
+       User directly.
 
    2.  Relying Party (RP) - an endpoint that seeks UserInfo used to
-       replay user authentication responses for OIDC exchanges, but also
-       wants Attestation Results that describe the trustworthiness of
-       the UE device.  The RP is synonymous with the RATS Relying Party
-       (RRP).
+       replay user authentication responses for OIDC exchanges.  The RP
+       may rely on the OP to appraise attestation results on its behalf
+       as a RATS Relying Party (RRP).  As such the RP may be the RATS AR
+       Owner.  Alternatively, the AR may directly process Attestation
+       Results.
 
    3.  OpenID Provider (OP) - an Authorization Server (AS) that
-       implements OIDC.
+       implements OIDC such that receipt of an OpenID 'code' from the UA
+       results in the issuance of an OpenID token, 'id-token'.  The OP
+       may implement the RATS Relying Party (RRP) role such that
+       issuance of the OpenID token is conditional on suitable
+       Attestation Results.  The RP may take on the role of AR Owner to
+       ensure the OP evaluates attestation results that align with its
+       risk requirements.
 
    4.  Verifier (RV) - a RATS attestation Verifier that processes device
        Evidence.  If the Verifier is combined with the OP, the Verifier
-       is synonymous with OP.
+       becomes an additional processing stage within the OP.
 
 3.2.  Setup Phase
 
@@ -546,9 +558,9 @@ Table of Contents
    [I-D.ftbs-rats-msg-wrap]
               Birkholz, H., Smith, N., Fossati, T., and H. Tschofenig,
               "RATS Conceptual Messages Wrapper", Work in Progress,
-              Internet-Draft, draft-ftbs-rats-msg-wrap-02, 7 March 2023,
+              Internet-Draft, draft-ftbs-rats-msg-wrap-03, 15 June 2023,
               <https://datatracker.ietf.org/doc/html/draft-ftbs-rats-
-              msg-wrap-02>.
+              msg-wrap-03>.
 
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
@@ -569,10 +581,11 @@ Authors' Addresses
 
    Ned Smith
    Intel Corporation
+   United States of America
    Email: ned.smith@intel.com
 
 
    Thomas Hardjono
    Massachusetts Institute of Technology
    United States of America
-   Email: ned.smith@intel.com
+   Email: hardjono@mit.edu

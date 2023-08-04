@@ -15,21 +15,21 @@ A common use case for OIDC is retrieval of user identity information authorized 
 require Attestation Results that describes the trust properties of the UserInfo Endpoint. Trust properties may
 be  a condition of accepting the user identity information. 
     " name="description">
-<meta content="xml2rfc 3.17.1" name="generator">
+<meta content="xml2rfc 3.17.5" name="generator">
 <meta content="attestation" name="keyword">
 <meta content="draft-sh-rats-oidcatt-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.1
-    Python 3.11.3
-    appdirs 1.4.4
+  xml2rfc 3.17.5
+    Python 3.11.4
     ConfigArgParse 1.5.3
-    google-i18n-address 2.5.2
+    google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.2
+    lxml 4.9.3
+    platformdirs 3.10.0
     pycountry 22.3.5
     PyYAML 6.0
-    requests 2.30.0
+    requests 2.31.0
     setuptools 67.7.2
     six 1.16.0
     wcwidth 0.2.6
@@ -614,6 +614,7 @@ sub, sup {
   clear: left;
   float: left;
   text-align: right;
+  margin-right: 1ch;
 }
 #identifiers dd {
   margin: 0;
@@ -1052,11 +1053,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OIDCATT</td>
-<td class="right">May 2023</td>
+<td class="right">August 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Smith &amp; Hardjono</td>
-<td class="center">Expires 19 November 2023</td>
+<td class="center">Expires 5 February 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-sh-rats-oidcatt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-05-18" class="published">18 May 2023</time>
+<time datetime="2023-08-04" class="published">4 August 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-11-19">19 November 2023</time></dd>
+<dd class="expires"><time datetime="2024-02-05">5 February 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1134,7 @@ be  a condition of accepting the user identity information.<a href="#section-abs
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 November 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 February 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1312,15 +1313,20 @@ and (usually) an Access Token.
 </li>
           <li class="normal" id="section-2.1-6.2">Relying Party (RP) / Client - an endpoint that sends a request to an OpenID Provider.<a href="#section-2.1-6.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.1-6.3">UserInfo Endpoint (UE) - an endpoint that receives an Access Token and sends Claims about an End User,
-also known as the User Agent (UA).<a href="#section-2.1-6.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.1-6.3">UserInfo Endpoint (UE) - an API endpoint that receives an Access Token and sends Claims about an End User.<a href="#section-2.1-6.3" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.1-6.4">End User (EU) - a human participant.<a href="#section-2.1-6.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.1-6.4">User Agent (UA) - a browser or other code that may interact with an End User or access user resources.<a href="#section-2.1-6.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-6.5">End User (EU) - a human participant.<a href="#section-2.1-6.5" class="pilcrow">¶</a>
 </li>
         </ul>
 <p id="section-2.1-7">OAuth 2.0 roles are as follows:<a href="#section-2.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.1-8.1">Resource Server (RS) - a service that controls a resource.<a href="#section-2.1-8.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-8.2">Client - synonymous with User Agent.<a href="#section-2.1-8.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-8.3">Resource Owner (RO) - synonymous with End User.<a href="#section-2.1-8.3" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -1349,27 +1355,26 @@ various steps in the operational phase are authorized.<a href="#section-3-1" cla
 </li>
         </ol>
 <ul class="normal">
-<li class="normal" id="section-3.1-3.1">A UserInfo Endpoint (UE) (e.g., browser) that supplies user information for OIDC authentication, and<a href="#section-3.1-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.1-3.1">A UserInfo Endpoint (UE) that supplies user information for OIDC authentication, and<a href="#section-3.1-3.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-3.1-3.2">A lead Attesting Environment, that collects device attestation Evidence. When using RATS terminology, the device may be
   referred to as the RATS Attester (RA). The RA is technically an OAuth 2.0 Resource Server (RS) that performs attestation
   Evidence collection. The Attester device may consist of multiple components that typically include a root of trust,
   boot code, system software and the browser. The lead Attesting Environment typically seeks to collect Evidence that
-  describes all the components, from the root of trust to the browser, that may influence browser behavior.<a href="#section-3.1-3.2" class="pilcrow">¶</a>
+  describes all the components, from the root of trust to the UA, that may influence endpoint behavior.<a href="#section-3.1-3.2" class="pilcrow">¶</a>
 </li>
         </ul>
 <ol start="1" type="1" class="normal type-1" id="section-3.1-4">
-<li id="section-3.1-4.1">End User (EU/"Alice") - a native application that can engage the human user directly. This document may refer to the
-End User by name, namely: "Alice".<a href="#section-3.1-4.1" class="pilcrow">¶</a>
+<li id="section-3.1-4.1">User Agent (UA) - a native application that can engage the End User directly.<a href="#section-3.1-4.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.1-4.2">Relying Party (RP) - an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges,
-but also wants Attestation Results that describe the trustworthiness of the UE device. The RP is synonymous with the RATS
-Relying Party (RRP).<a href="#section-3.1-4.2" class="pilcrow">¶</a>
+          <li id="section-3.1-4.2">Relying Party (RP) - an endpoint that seeks UserInfo used to replay user authentication responses for OIDC exchanges.
+The RP may rely on the OP to appraise attestation results on its behalf as a RATS Relying Party (RRP). As such the RP may be the RATS AR Owner. Alternatively, the AR may directly process Attestation Results.<a href="#section-3.1-4.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.1-4.3">OpenID Provider (OP) - an Authorization Server (AS) that implements OIDC.<a href="#section-3.1-4.3" class="pilcrow">¶</a>
+          <li id="section-3.1-4.3">OpenID Provider (OP) - an Authorization Server (AS) that implements OIDC such that receipt of an OpenID 'code' from the UA results in the issuance of an OpenID token, 'id-token'. The OP may implement the RATS Relying Party (RRP) role such that issuance of the OpenID token is conditional on suitable Attestation Results. The RP may take on the role of AR Owner to ensure the OP evaluates attestation results that align with its risk requirements.<a href="#section-3.1-4.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.1-4.4">Verifier (RV) - a RATS attestation Verifier that processes device Evidence. If the Verifier is combined with the OP,
-the Verifier is synonymous with OP.<a href="#section-3.1-4.4" class="pilcrow">¶</a>
+          <li id="section-3.1-4.4">Verifier (RV) - a RATS attestation Verifier that processes device Evidence.
+If the Verifier is combined with the OP, the Verifier becomes an additional processing
+stage within the OP.<a href="#section-3.1-4.4" class="pilcrow">¶</a>
 </li>
         </ol>
 </section>
@@ -1464,7 +1469,7 @@ The trigger for sending the AuthN request is out of scope for this document.<a h
 <figure id="figure-1">
             <div id="section-3.3.1-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.1-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="112" width="448" viewBox="0 0 448 112" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="112" width="448" viewBox="0 0 448 112" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,96" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,96" fill="none" stroke="black"></path>
                   <path d="M 360,32 L 360,96" fill="none" stroke="black"></path>
@@ -1529,7 +1534,7 @@ typically 'consent_required'.<a href="#section-3.3.2-1" class="pilcrow">¶</a></
 <figure id="figure-2">
             <div id="section-3.3.2-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.2-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="144" width="464" viewBox="0 0 464 144" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="144" width="464" viewBox="0 0 464 144" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,128" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,128" fill="none" stroke="black"></path>
                   <path d="M 376,32 L 376,128" fill="none" stroke="black"></path>
@@ -1600,7 +1605,7 @@ and the End User <span class="bcp14">MUST</span> be given the option to withhold
 <figure id="figure-3">
             <div id="section-3.3.3-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.3-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="112" width="448" viewBox="0 0 448 112" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="112" width="448" viewBox="0 0 448 112" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,96" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,96" fill="none" stroke="black"></path>
                   <path d="M 360,32 L 360,96" fill="none" stroke="black"></path>
@@ -1650,7 +1655,7 @@ The Evidence is returned to the OP through the UE, which normally returns the �
 <figure id="figure-4">
             <div id="section-3.3.4-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.4-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="160" width="496" viewBox="0 0 496 160" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="160" width="496" viewBox="0 0 496 160" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,144" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,144" fill="none" stroke="black"></path>
                   <path d="M 408,32 L 408,144" fill="none" stroke="black"></path>
@@ -1741,7 +1746,7 @@ The verification response contains the Attestation Results and ‘access-token�
 <figure id="figure-5">
             <div id="section-3.3.5-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.5-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="160" width="496" viewBox="0 0 496 160" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="160" width="496" viewBox="0 0 496 160" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,144" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,144" fill="none" stroke="black"></path>
                   <path d="M 408,32 L 408,144" fill="none" stroke="black"></path>
@@ -1826,7 +1831,7 @@ Presumably, if the UE isn’t trustworthy, the protocol is terminated.<a href="#
 <figure id="figure-6">
             <div id="section-3.3.6-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.6-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="112" width="448" viewBox="0 0 448 112" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="112" width="448" viewBox="0 0 448 112" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,96" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,96" fill="none" stroke="black"></path>
                   <path d="M 360,32 L 360,96" fill="none" stroke="black"></path>
@@ -1876,7 +1881,7 @@ The UserInfo response is initiated by the UE, who sends ‘client-id’, ‘id-t
 <figure id="figure-7">
             <div id="section-3.3.7-2.1">
               <div class="alignCenter art-svg artwork" id="section-3.3.7-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="160" width="496" viewBox="0 0 496 160" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="160" width="496" viewBox="0 0 496 160" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,144" fill="none" stroke="black"></path>
                   <path d="M 88,32 L 88,144" fill="none" stroke="black"></path>
                   <path d="M 408,32 L 408,144" fill="none" stroke="black"></path>
@@ -1971,7 +1976,7 @@ The UserInfo response is initiated by the UE, who sends ‘client-id’, ‘id-t
 <dl class="references">
 <dt id="I-D.ftbs-rats-msg-wrap">[I-D.ftbs-rats-msg-wrap]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ftbs-rats-msg-wrap-02</span>, <time datetime="2023-03-07" class="refDate">7 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ftbs-rats-msg-wrap-02">https://datatracker.ietf.org/doc/html/draft-ftbs-rats-msg-wrap-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ftbs-rats-msg-wrap-03</span>, <time datetime="2023-06-15" class="refDate">15 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ftbs-rats-msg-wrap-03">https://datatracker.ietf.org/doc/html/draft-ftbs-rats-msg-wrap-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6749">[RFC6749]</dt>
         <dd>
@@ -2004,6 +2009,7 @@ The UserInfo response is initiated by the UE, who sends ‘client-id’, ‘id-t
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Ned Smith</span></div>
 <div dir="auto" class="left"><span class="org">Intel Corporation</span></div>
+<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:ned.smith@intel.com" class="email">ned.smith@intel.com</a>
@@ -2015,7 +2021,7 @@ The UserInfo response is initiated by the UE, who sends ‘client-id’, ‘id-t
 <div dir="auto" class="left"><span class="country-name">United States of America</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:ned.smith@intel.com" class="email">ned.smith@intel.com</a>
+<a href="mailto:hardjono@mit.edu" class="email">hardjono@mit.edu</a>
 </div>
 </address>
 </section>
