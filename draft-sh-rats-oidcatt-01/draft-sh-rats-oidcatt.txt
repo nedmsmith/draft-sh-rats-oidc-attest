@@ -1,0 +1,579 @@
+
+
+
+
+Remote ATtestation ProcedureS                                   N. Smith
+Internet-Draft                                         Intel Corporation
+Intended status: Informational                               T. Hardjono
+Expires: 10 February 2024          Massachusetts Institute of Technology
+                                                           9 August 2023
+
+
+                     Attestation in OpenID-Connect
+                      draft-sh-rats-oidcatt-latest
+
+Abstract
+
+   This document defines message flows and extensions to OpenID-Connect
+   (OIDC) messages that support attestation.  Attestation Evidence and
+   Attestation Results is accessed via appropriate APIs that presumably
+   require authorization using OAuth 2.0 access tokens.  A common use
+   case for OIDC is retrieval of user identity information authorized by
+   an OIDC identity token.  The Relying Party may require Attestation
+   Results that describes the trust properties of the UserInfo Endpoint.
+   Trust properties may be a condition of accepting the user identity
+   information.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://nedmsmith.github.io/draft-sh-rats-oidc-attest/draft-sh-rats-
+   oidcatt.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-sh-rats-oidcatt/.
+
+   Discussion of this document takes place on the Remote ATtestation
+   ProcedureS Working Group mailing list (mailto:rats@ietf.org), which
+   is archived at https://mailarchive.ietf.org/arch/browse/rats/.
+   Subscribe at https://www.ietf.org/mailman/listinfo/rats/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/nedmsmith/draft-sh-rats-oidc-attest.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 10 February 2024.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+     2.1.  Terminology
+   3.  OIDC Sequence with Attestation
+     3.1.  Protocol Endpoints
+     3.2.  Setup Phase
+       3.2.1.  Identity Token Creation
+       3.2.2.  Attestation Access Token Creation
+       3.2.3.  UserInfo Access Token Creation
+       3.2.4.  Evidence Appraisal Access Token Creation
+       3.2.5.  Register Device
+       3.2.6.  Attestation Evidence Payload
+       3.2.7.  Attestation Results Payload
+     3.3.  Operational Phase
+       3.3.1.  AuthN Request
+       3.3.2.  Forwarded AuthN Request
+       3.3.3.  User Authorization of AuthN, AuthZ, and Attest
+       3.3.4.  Attestation Request and Response
+       3.3.5.  Appraisal Request and Response
+       3.3.6.  AuthN Response
+       3.3.7.  UserInfo Request and Response
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   This document defines attestation conceptual message flows that
+   extend OpenID-Connect (OIDC) messages, see [OCC2014].  Attestation
+   Evidence and Attestation Results are RATS conceptual messages, see
+   [RFC9334] and [I-D.ftbs-rats-msg-wrap], that are obtained via
+   appropriate APIs conditional on OAuth 2.0 access tokens [RFC6749].  A
+   common use case for OIDC is retrieval of user identity information
+   authorized by an OIDC identity token.  The Relying Party may require
+   Attestation Results regarding the UserInfo Endpoint as a condition of
+   accepting the user identity information.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.1.  Terminology
+
+   This specification uses role names as defined by Remote ATtestation
+   procedureS (RATS), [RFC9334] and OpenID Connect (OIDC), [OCC2014].
+   If role names conflict, (e.g., Relying Party), then the RATS role is
+   qualified by prepending ‘RATS’ or ‘R’. For example, the RATS Relying
+   Party is disambiguated as ‘RRP’.
+
+   A summary of roles used in this specification is provided here for
+   convenience.
+
+   RATS roles are as follows:
+
+   *  Attester (RA) - an endpoint that produces attestation Evidence.
+
+   *  Reference Value Provider (RVP) - an endpoint that produces
+      Reference Values used to appraise Evidence.
+
+   *  Endorser (RE) - an endpoint that produces Endorsements used to
+      assess the trustworthiness of the Attester's attestation
+      capability.
+
+   *  Verifier (RV) - an endpoint that consumes Evidence, Endorsements
+      and Reference Values and produces Attestation Results.
+
+   *  Relying Party (RRP) - an endpoint that consumes Attestation
+      Results and applies them to an application or usage context.
+
+   OIDC roles are as follows:
+
+   *  OpenID Provider (OP) - an endpoint that authenticates an End User,
+      obtains authorization, and responds with an ID Token and (usually)
+      an Access Token. (a.k.a., an OAuth 2.0 Authorization Server,
+      [RFC6749]).
+
+   *  Relying Party (RP) / Client - an endpoint that sends a request to
+      an OpenID Provider.
+
+   *  UserInfo Endpoint (UE) - an endpoint that receives an Access Token
+      and sends Claims about an End User, also known as the User Agent
+      (UA).
+
+   *  End User (EU) - a human participant.
+
+   OAuth 2.0 roles are as follows:
+
+   *  Resource Server (RS) - a service that controls a resource.
+
+3.  OIDC Sequence with Attestation
+
+   OpenID-Connect (OIDC) [OCC2014] defines user authentication protocol
+   and messages based on OAuth 2.0 [RFC6749] authorization protocol and
+   messages.  This section shows an example OIDC protocol sequence with
+   extensions for attestation Evidence and Attestation Results (AR)
+   exchanges.  The protocol is divided into two phases.  A setup phase
+   and an operational phase.  The setup phase models protocol
+   initialization steps that are anticipated but often ignored.  An
+   understanding of the initialization steps may be helpful when
+   determining how various steps in the operational phase are
+   authorized.
+
+3.1.  Protocol Endpoints
+
+   The example protocol message exchange involves four main endpoints:
+
+   1.  Device - a RATS Attester that consists of two sub entities:
+
+   *  A UserInfo Endpoint (UE) (e.g., browser) that supplies user
+      information for OIDC authentication, and
+
+   *  A lead Attesting Environment, that collects device attestation
+      Evidence.  When using RATS terminology, the device may be referred
+      to as the RATS Attester (RA).  The RA is technically an OAuth 2.0
+      Resource Server (RS) that performs attestation Evidence
+      collection.  The Attester device may consist of multiple
+      components that typically include a root of trust, boot code,
+      system software and the browser.  The lead Attesting Environment
+      typically seeks to collect Evidence that describes all the
+      components, from the root of trust to the browser, that may
+      influence browser behavior.
+
+   1.  End User (EU/"Alice") - a native application that can engage the
+       human user directly.  This document may refer to the End User by
+       name, namely: "Alice".
+
+   2.  Relying Party (RP) - an endpoint that seeks UserInfo used to
+       replay user authentication responses for OIDC exchanges, but also
+       wants Attestation Results that describe the trustworthiness of
+       the UE device.  The RP is synonymous with the RATS Relying Party
+       (RRP).
+
+   3.  OpenID Provider (OP) - an Authorization Server (AS) that
+       implements OIDC.
+
+   4.  Verifier (RV) - a RATS attestation Verifier that processes device
+       Evidence.  If the Verifier is combined with the OP, the Verifier
+       is synonymous with OP.
+
+3.2.  Setup Phase
+
+   The setup phase creates the various identity (‘id-token’) and access
+   (‘access-token’) credentials that are used during the operational
+   phase to authorize the exchange of the various OIDC protocol
+   messages.
+
+3.2.1.  Identity Token Creation
+
+   In this example, there is a single end user, “Alice”, that creates an
+   identity token ‘id-token’. The Native App signals the UE when it is
+   appropriate to create the id-token.  For example, the 'id-token'
+   contains: { "sub": "A21CE", "name": "Alice" }.
+
+3.2.2.  Attestation Access Token Creation
+
+   The RA exposes an attestation API that invokes the attestation
+   capabilities of the Attester device.  An access token, ‘access-token-
+   attest’, is needed to authorize use of the attestation API.
+
+3.2.3.  UserInfo Access Token Creation
+
+   The UE exposes a UserInfo API that invokes the user information
+   capabilities of the User Agent.  An access token, ‘access-token-
+   uinfo’, is needed to authorize use of the UserInfo API.
+
+3.2.4.  Evidence Appraisal Access Token Creation
+
+   The RV exposes an API for appraising Evidence.  An access token,
+   ‘access-token-appraisal’, is needed to authorize use of the appraisal
+   API.
+
+3.2.5.  Register Device
+
+   The Attester device is registered with the RP client in anticipation
+   of subsequent operational flows.  The registration process is out of
+   scope for this document.
+
+3.2.6.  Attestation Evidence Payload
+
+   The RA produces an Evidence payload that is conveyed to the RV.  Some
+   OIDC messages are extended to carry Evidence.
+
+3.2.7.  Attestation Results Payload
+
+   The RV produces an Attestation Results payload that is conveyed to
+   the RP.  Some OIDC messages are extended to carry Attestation
+   Results.
+
+3.3.  Operational Phase
+
+   The operational phase protocol builds on the abstract OIDC protocol
+   in [OCC2014].  The five OIDC steps are described here for convenience
+   and attestation related steps are described as sub-steps.
+
+3.3.1.  AuthN Request
+
+   The RP sends an AuthN request to the OP containing the RP’s identity
+   ‘client-id’. Additionally, the RP includes an attestation scope,
+   e.g., ‘scope=”device-attest”’ that instructs the OP to obtain an
+   attestation from the UE device.  The trigger for sending the AuthN
+   request is out of scope for this document.
+
+          +---------+                                 +---------+
+          |         |                                 |         |
+          |   RP    +--- (1) client-id, scope ------->|   OP    |
+          |         |                                 |         |
+          +---------+                                 +---------+
+
+                        Figure 1: AuthN Request Flow
+
+3.3.1.1.  AuthN Request Payload
+
+   The following non-normative AuthN Request payload example identifies
+   the OP server location, the RP client identity, and an attestation
+   scope:
+
+   AuthN_Req = {
+       "location": https://op.example.com/authn"
+       "client_id": "s6BhdRkqt3",
+       "scope": "device-attest"
+   }
+
+3.3.2.  Forwarded AuthN Request
+
+   The OP forwards the original AuthN request to the UE.  The
+   attestation scope instructs the UE to configure the device for
+   attestation.  For example, an internal interface between the UE and
+   RA (a.k.a., Resource Server) might be used to configure a ‘client-id’
+   nonce that the RA Attesting Environment includes with attestation
+   Evidence.  The UE normally returns a payload containing the ‘client-
+   id’, response type (i.e., resp-type = “code”), and the authentication
+   result (i.e., authn-proof).  However, a successful response is
+   returned on condition of successful configuration of the attestation
+   scope.  The End User may consent to the disclosure of attestation
+   Evidence using the 'prompt' parameter.  An "attestation-consent"
+   authorization string is supplied as one of the 'prompt' parameters. *
+   *attestation-consent - The OP (a.k.a., Authorization Server) SHOULD
+   prompt the End User for consent before returning information to the
+   RP (a.k.a., Client).  If it cannot obtain attestation consent, it
+   MUST return an error, typically 'consent_required'.
+
+         +---------+                                   +---------+
+         |         |                                   |         |
+         |         +--- (1.1) client-id, scope ------->|         |
+         |   OP    |                                   |   UE    |
+         |         |<-- (1.2) client-id, resp-type, ---+         |
+         |         |           authn-proof             |         |
+         +---------+                                   +---------+
+
+              Figure 2: Forwarded AuthN Request-Response Flow
+
+3.3.2.1.  Forwarded AuthN Request and Response Payloads
+
+   The forwarded AuthN Request is identical to AuthN Request.  The
+   forwarded AuthN Response payload example identifies the originating
+   RP, scope, response type, and authentication proof:
+
+   AuthN_Rsp = {
+       "client_id": "s6BhdRkqt3",
+       "scope": "device-attest",
+       "resp_type": "code",
+       "authn_proof": "<tbd>"
+   }
+
+3.3.3.  User Authorization of AuthN, AuthZ, and Attest
+
+   The OP authenticates the End User (e.g., “Alice”) and obtains
+   authorization.  Normally, authorization is limited to an
+   authentication or authorization context as defined by the legacy OIDC
+   protocol.  But when attestation scope is used, the End User may wish
+   to approve attestation.  Attestation normally reveals Evidence
+   details about the UE device.  If those details contain privacy
+   sensitive information, the End User may wish to opt-out of
+   attestation.  If the Authentication Request contains the 'prompt'
+   parameter with the value 'attestation-consent', the OP MUST inform
+   the End User that attestation Evidence is about to be disclosed to
+   the RP (a.k.a., Client), and the End User MUST be given the option to
+   withhold Evidence.
+
+          +---------+                                 +---------+
+          |         |                                 |         |
+          |   OP    +--- (2) AuthN, AuthZ, Attest---->|   EU    |
+          |         |                                 |         |
+          +---------+                                 +---------+
+
+                   Figure 3: End User Authentication Flow
+
+3.3.3.1.  End User Authorization Payload
+
+   TODO add example
+
+3.3.4.  Attestation Request and Response
+
+   If the End User doesn’t opt-out of attestation, the OP requests
+   attestation Evidence from the RA (as a Resource Server).  The OP
+   sends the ‘access-token-attest’ and ‘id-token = “Alice”’ tokens to
+   the RA.  The RA collects Evidence according to the configured
+   attestation scope.  For example, if a ‘client-id’ specific nonce was
+   configured, the nonce is included with Evidence.  The Evidence is
+   returned to the OP through the UE, which normally returns the
+   ‘client-id’, ‘access-token’, and ‘id-token’.
+
+       +---------+                                       +---------+
+       |         |                                       |         |
+       |         +--- (2.1) client-id, access-token,---->|         |
+       |   OP    |          id-token                     |   RA    |
+       |         |                                       |         |
+       |         |<-- (2.2) client-id, access-token,-----+         |
+       |         |          id-token, Evidence           |         |
+       +---------+                                       +---------+
+
+                Figure 4: Attestation Request-Response Flow
+
+3.3.4.1.  Attestation Request and Response Payloads
+
+   The Attestation Request and Response payload example contains an
+   access_token that authorizes use of the attestation API of the RA and
+   an id_token that identifies the End User.
+
+   access_token = {
+       "iss": "https://jwt-op.example.com",
+       "sub": "https://jwt-ra.example.com/24400320",
+       "aud": "https://jwt-rp.example.com/s6BhdRkqt3",
+       "nbf": 1300815780,
+       "exp": 1300819380,
+       "claims.example.com/attest-api": true
+   }
+
+   id_token = {
+       "iss": "https://jwt-op.example.com",
+       "sub": "https://jwt-ra.example.com/24400320",
+       "aud": "https://jwt-rp.example.com/s6BhdRkqt3",
+       "nbf": 1300815780,
+       "exp": 1300819380,
+       "name": "Alice"
+   }
+
+   The response payload contains an Evidence value as described by a
+   conceptual message wrapper [I-D.ftbs-rats-msg-wrap].
+
+   evidence_cmw = [
+       "application/eat+jwt",
+       "<base64-string containing a JWT>"
+   ]
+
+3.3.5.  Appraisal Request and Response
+
+   The OP requests appraisal of Evidence by sending the ‘access-token-
+   appraisal’ token and Evidence to the RV.  The token authorizes use of
+   the appraisal API, which when appraisal completes, supplies
+   Attestation Results.  The verification response contains the
+   Attestation Results and ‘access-token’, that the RV sends to the OP.
+
+       +---------+                                       +---------+
+       |         |                                       |         |
+       |         +--- (2.3) access-token, Evidence------>|         |
+       |   OP    |                                       |   RV    |
+       |         |                                       |         |
+       |         |<-- (2.4) access-token, Attestation----+         |
+       |         |                Results                |         |
+       +---------+                                       +---------+
+
+                 Figure 5: Appraisal Request-Response Flow
+
+3.3.5.1.  Appraisal Request and Response Payloads
+
+   The Appraisal Request payload example contains an access_token that
+   authorizes use of the appraisal API of the RV and the Evidence to be
+   appraised.
+
+   access_token = {
+       "iss": "https://jwt-op.example.com",
+       "sub": "https://jwt-rv.example.com",
+       "aud": "https://jwt-rp.example.com/s6BhdRkqt3",
+       "nbf": 1300815780,
+       "exp": 1300819380,
+       "claims.example.com/appraisal-api": true
+   }
+
+   evidence_cmw = [
+       "application/eat+jwt",
+       "<base64-string containing a JWT>"
+   ]
+
+   The response payload contains an Attestation Results value as
+   described by a conceptual message wrapper [I-D.ftbs-rats-msg-wrap].
+
+   attestation_result_cmw = [
+       "application/eat+jwt",
+       "<base64-string containing a JWT>"
+   ]
+
+3.3.6.  AuthN Response
+
+   The OP sends ‘client-id’, ‘id-token = “Alice”’, ‘access-token-uinfo’,
+   and the Attestation Results to the RP.  The RP processes the
+   Attestation Results to determine if the UE device is trustworthy.
+   Presumably, if the UE isn’t trustworthy, the protocol is terminated.
+
+          +---------+                                 +---------+
+          |         |                                 |         |
+          |   OP    +--- (2) AuthN, AuthZ, Attest---->|   EU    |
+          |         |                                 |         |
+          +---------+                                 +---------+
+
+                       Figure 6: AuthN Response Flow
+
+3.3.6.1.  AuthN Response Payload
+
+   TODO add example
+
+3.3.7.  UserInfo Request and Response
+
+   The UserInfo request is initiated by the RP, who sends ‘client-id’,
+   ‘id-token = “Alice”’, and ‘access-token-uinfo’ to the UE to collect
+   user identity information.  The UserInfo response is initiated by the
+   UE, who sends ‘client-id’, ‘id-token = “Alice”’, ‘access-token-
+   uinfo’, and the UserInfo payload to the RP to process user claims and
+   complete the OIDC protocol.
+
+       +---------+                                       +---------+
+       |         |                                       |         |
+       |         +--- (4) access-token, id-token,------->|         |
+       |   RP    |             client-id                 |   UE    |
+       |         |                                       |         |
+       |         |<-- (5) access-token, id-token,--------+         |
+       |         |          client-id, UserInfo          |         |
+       +---------+                                       +---------+
+
+                  Figure 7: UserInfo Request-Response Flow
+
+3.3.7.1.  UserInfo Request and Response Payloads
+
+   TODO add example
+
+4.  Security Considerations
+
+   TODO Security
+
+5.  IANA Considerations
+
+   This document has no IANA actions.
+
+6.  References
+
+6.1.  Normative References
+
+   [OCC2014]  Sakimura, N., "OpenID Connect Core 1.0 incorporating
+              errata set 1", November 2014.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+6.2.  Informative References
+
+   [I-D.ftbs-rats-msg-wrap]
+              Birkholz, H., Smith, N., Fossati, T., and H. Tschofenig,
+              "RATS Conceptual Messages Wrapper", Work in Progress,
+              Internet-Draft, draft-ftbs-rats-msg-wrap-03, 15 June 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ftbs-rats-
+              msg-wrap-03>.
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6749>.
+
+   [RFC9334]  Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
+              W. Pan, "Remote ATtestation procedureS (RATS)
+              Architecture", RFC 9334, DOI 10.17487/RFC9334, January
+              2023, <https://www.rfc-editor.org/rfc/rfc9334>.
+
+Acknowledgments
+
+   The authors would like to thank the following people for their input:
+
+   *  Jay Chetty - for review feedback.
+
+Authors' Addresses
+
+   Ned Smith
+   Intel Corporation
+   United States of America
+   Email: ned.smith@intel.com
+
+
+   Thomas Hardjono
+   Massachusetts Institute of Technology
+   United States of America
+   Email: hardjono@mit.edu
