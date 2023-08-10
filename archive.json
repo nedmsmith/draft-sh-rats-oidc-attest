@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-28T00:56:49.970154+00:00",
+  "timestamp": "2023-08-10T00:45:04.505645+00:00",
   "repo": "nedmsmith/draft-sh-rats-oidc-attest",
   "labels": [
     {
@@ -316,6 +316,42 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOIhTxMM5XO7Xb",
+      "title": "Update draft-sh-rats-oidcatt.md",
+      "url": "https://github.com/nedmsmith/draft-sh-rats-oidc-attest/pull/9",
+      "state": "MERGED",
+      "author": "nedmsmith",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Applied feedback from George Fletcher",
+      "createdAt": "2023-08-04T22:46:31Z",
+      "updatedAt": "2023-08-09T19:54:00Z",
+      "baseRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "baseRefName": "main",
+      "baseRefOid": "1031265ac480da6ac02c791e99ef7e49468dee54",
+      "headRepository": "nedmsmith/draft-sh-rats-oidc-attest",
+      "headRefName": "ned-updates-aug_4",
+      "headRefOid": "503c3a1e4d4c931af6d91b7468f8cccd59abfb37",
+      "closedAt": "2023-08-09T19:53:52Z",
+      "mergedAt": "2023-08-09T19:53:52Z",
+      "mergedBy": "nedmsmith",
+      "mergeCommit": {
+        "oid": "3fb9854079915e32db819775b32beac507b71ded"
+      },
+      "comments": [
+        {
+          "author": "nedmsmith",
+          "authorAssociation": "OWNER",
+          "body": "I plan to republish using automated build tools to see if that fixes the problem with diagrams not being rendered.",
+          "createdAt": "2023-08-04T22:57:31Z",
+          "updatedAt": "2023-08-04T22:57:31Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
